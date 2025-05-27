@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Lista Chá de Casa Nova</title>
   <link rel="stylesheet" href="styleHome.css"> 
-  
 </head>
 <body>
   <div id="conteinerPrincipal">
@@ -27,7 +26,6 @@
       <option>Escorredor de louças (preto)</option>
       <option>Jogo de xícaras</option>
       <option>Jogo de sobremesa (vidro)</option>
-      <option>Jogo de copos (vidro)</option>
       <option>Boleira de vidro</option>
       <option>Travessa duralex</option>
       <option>Pirex de louça retangular (branca)</option>
@@ -88,13 +86,17 @@
     <button onclick="confirmarPresente()"><b>Confirmar</b></button>
 
     <script>
+      // Função para normalizar texto (remover espaços e colocar em minúsculo)
+      const normalizar = (texto) => texto.trim().toLowerCase();
+
       // Remove da lista os itens já selecionados anteriormente
       window.addEventListener("DOMContentLoaded", () => {
         const select = document.getElementById("listaItens");
         const removidos = JSON.parse(localStorage.getItem("itensRemovidos")) || [];
 
         for (let i = select.options.length - 1; i >= 0; i--) {
-          if (removidos.includes(select.options[i].text)) {
+          const textoOption = select.options[i].text;
+          if (removidos.map(normalizar).includes(normalizar(textoOption))) {
             select.remove(i);
           }
         }
