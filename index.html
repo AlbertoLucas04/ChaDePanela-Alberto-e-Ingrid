@@ -3,106 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lista Chá de Casa Nova</title>
-  <link rel="stylesheet" href="styleHome.css">
+  <link rel="stylesheet" href="styleHome.css"> 
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 </head>
 <body>
   <div id="conteinerPrincipal">
+    <br>
     <h1>Chá de Panela - Ingrid e Alberto</h1>
 
     <p id="littleLetter">
       Olá, que maravilha que você vai poder estar conosco nesse dia tão memorável. Nós louvamos a Deus pelo que Ele têm feito e por você poder ser parte disso. Abaixo está um pequeno formulário que nos ajudará a organizar a logística desse maravilhoso evento.
     </p>
 
+    <br><br>
+
     <label id="nameTitle" for="nameBox">Seu nome:</label>
     <input type="text" id="nameBox" name="nome" />
+    <br><br><br>
 
     <h2 id="chooseAGift">Escolha um presente:</h2>
     <select id="listaItens">
       <option value="">-- Selecione um item --</option>
-      <option value="escorredor-loucas-preto">Escorredor de louças (preto)</option>
-      <option value="pirex-retangular-branca">Pirex de louça retangular (branca)</option>
-      <option value="pirex-redondo-branca">Pirex de louça redondo (branca)</option>
-      <option value="tabua-carne-silicone">Tábua de carne com silicone</option>
-      <option value="frigideira-antiaderente-carrefour">Frigideira antiaderente Carrefour Home</option>
-      <option value="jogo-americano-azul">Jogo americano azul (fácil de limpar)</option>
-      <option value="porta-copos-inox">Porta copos de inox</option>
-      <option value="jogo-tapete-banheiro-branco">Jogo de tapete de banheiro (branco)</option>
-      <option value="jogo-lencois">Jogo de lençóis</option>
-      <option value="lencol-elastico">Lençóis de elástico</option>
-      <option value="jogo-cama">Jogo de cama</option>
-      <option value="cortina-blackout-offwhite">Cortina blackout off white (2,57x2,46m)</option>
-      <option value="manta-sofa-offwhite">Manta para sofá (off white/linho)</option>
-      <option value="cesto-roupa-grande">Cesto de roupa (grande)</option>
-      <option value="lixeira-banheiro-inox">Lixeira de banheiro inox</option>
-      <option value="kit-3-almofadas-linho">Kit 3 almofadas (linho/off white)</option>
-      <option value="frigideira-pequena">Frigideira pequena antiaderente</option>
-      <option value="leiteira">Leiteira</option>
-      <option value="kit-descanso-panela">Kit descanso de panela</option>
-      <option value="jogo-peneiras-branco">Jogo de peneiras (branco)</option>
-      <option value="jogo-panelas-tramontina">Jogo de panelas Tramontina</option>
-      <option value="pipoqueira">Pipoqueira (panela)</option>
-      <option value="abajur">Abajur</option>
-      <option value="kit-cabide-madeira">Kit cabide madeira</option>
-      <option value="cobertor-casal-bege">Cobertor casal (bege ou off white)</option>
-      <option value="porta-retrato-parede-media">Porta-retrato de parede média (100x70cm)</option>
-      <option value="album-grande">Álbum grande</option>
-      <option value="varal-chao-grande">Varal de chão (grande)</option>
-      <option value="abajur-chao">Abajur de chão (preto ou branco)</option>
-      <option value="kit-2-travesseiros">Kit 2 travesseiros</option>
-      <option value="kit-acessorios-banheiro-dourado">Kit acessórios de banheiro (dourado)</option>
-      <option value="torneira-banheiro-dourada">Torneira para banheiro (dourada)</option>
-      <option value="mixer">Mixer</option>
-      <option value="cortina-voil-branca">Cortina voil (branca ou off white, 2,56x2,46)</option>
-      <option value="mesa-apoio-lateral">Mesa de apoio lateral de cama</option>
-      <option value="kit-peneiras">Kit peneiras</option>
-      <option value="tapioqueira">Tapioqueira</option>
-      <option value="potes-vidro">Potes de vidro</option>
-      <option value="escova-sanitaria">Escova sanitária</option>
-      <option value="ferro-passar-roupa">Ferro de passar roupa</option>
-      <option value="jarras-agua">Jarras de água</option>
-      <option value="queijeira">Queijeira</option>
-      <option value="ralador-triturador">Ralador / triturador</option>
+      <!-- Items will be loaded dynamically -->
     </select>
+    <br><br><br><br>
 
     <button onclick="confirmarPresente()"><b>Confirmar</b></button>
 
     <script>
-      const planilhaUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5iAh-P6EbCs9wp4ndeOA8AJWSlu--hrC4-Z-nrN-ZG5yPdBEOd8g3H8k38gFqdOJfMLYKfkz_LBRH/pub?output=csv";
+      // Google Sheets URL
+      const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5iAh-P6EbCs9wp4ndeOA8AJWSlu--hrC4-Z-nrN-ZG5yPdBEOd8g3H8k38gFqdOJfMLYKfkz_LBRH/pub?output=csv";
+      
+      // All possible gifts with their values
+      const ALL_GIFTS = [
+        {value: "escorredor-loucas-preto", text: "Escorredor de louças (preto)"},
+        {value: "jogo-xicaras", text: "Jogo de xícaras"},
+        {value: "jogo-sobremesa-vidro", text: "Jogo de sobremesa (vidro)"},
+        {value: "jogo-copos-vidro", text: "Jogo de copos (vidro)"},
+        {value: "boleira-vidro", text: "Boleira de vidro"},
+        {value: "travessa-duralex", text: "Travessa duralex"},
+        {value: "pirex-retangular-branca", text: "Pirex de louça retangular (branca)"},
+        {value: "pirex-redondo-branca", text: "Pirex de louça redondo (branca)"},
+        {value: "porta-temperos-vidro-3", text: "Porta temperos de vidro (3 unid)"},
+        {value: "tabua-carne-silicone", text: "Tábua de carne com silicone"},
+        {value: "frigideira-antiaderente-carrefour", text: "Frigideira antiaderente Carrefour Home"},
+        {value: "fruteira", text: "Fruteira"},
+        {value: "jogo-americano-azul", text: "Jogo americano azul (fácil de limpar)"},
+        {value: "suporte-papel-toalha", text: "Suporte de papel toalha"},
+        {value: "porta-copos-inox", text: "Porta copos de inox"},
+        {value: "jogo-tapete-cozinha-preto", text: "Jogo de tapete de cozinha (preto)"},
+        {value: "jogo-tapete-banheiro-branco", text: "Jogo de tapete de banheiro (branco)"},
+        {value: "jogo-lencois", text: "Jogo de lençóis"},
+        {value: "lencol-elastico", text: "Lençóis de elástico"},
+        {value: "jogo-cama", text: "Jogo de cama"},
+        {value: "caixa-organizadora-grande", text: "Caixa organizadora (grande)"},
+        {value: "cortina-blackout-offwhite", text: "Cortina blackout off white (2,57x2,46m)"},
+        {value: "manta-sofa-offwhite", text: "Manta para sofá (off white/linho)"},
+        {value: "jogo-toalha", text: "Jogo de toalha"},
+        {value: "cesto-roupa-grande", text: "Cesto de roupa (grande)"},
+        {value: "lixeira-banheiro-inox", text: "Lixeira de banheiro inox"},
+        {value: "kit-3-almofadas-linho", text: "Kit 3 almofadas (linho/off white)"},
+        {value: "frigideira-pequena", text: "Frigideira pequena antiaderente"},
+        {value: "leiteira", text: "Leiteira"},
+        {value: "kit-descanso-panela", text: "Kit descanso de panela"},
+        {value: "jogo-peneiras-branco", text: "Jogo de peneiras (branco)"},
+        {value: "jogo-panelas-tramontina", text: "Jogo de panelas Tramontina"},
+        {value: "pipoqueira", text: "Pipoqueira (panela)"},
+        {value: "panela-pressao-grande", text: "Panela de pressão (grande)"},
+        {value: "abajur", text: "Abajur"},
+        {value: "kit-cabide-madeira", text: "Kit cabide madeira"},
+        {value: "cobertor-casal-bege", text: "Cobertor casal (bege ou off white)"},
+        {value: "porta-papel-toalha", text: "Porta papel toalha"},
+        {value: "porta-retrato-parede-media", text: "Porta-retrato de parede média (100x70cm)"},
+        {value: "album-grande", text: "Álbum grande"},
+        {value: "varal-chao-grande", text: "Varal de chão (grande)"},
+        {value: "abajur-chao", text: "Abajur de chão (preto ou branco)"},
+        {value: "kit-2-travesseiros", text: "Kit 2 travesseiros"},
+        {value: "kit-acessorios-banheiro-dourado", text: "Kit acessórios de banheiro (dourado)"},
+        {value: "torneira-banheiro-dourada", text: "Torneira para banheiro (dourada)"},
+        {value: "mixer", text: "Mixer"},
+        {value: "cortina-voil-branca", text: "Cortina voil (branca ou off white, 2,56x2,46)"},
+        {value: "mesa-apoio-lateral", text: "Mesa de apoio lateral de cama"},
+        {value: "kit-peneiras", text: "Kit peneiras"},
+        {value: "tapioqueira", text: "Tapioqueira"},
+        {value: "forma-silicone", text: "Forma de silicone"},
+        {value: "potes-vidro", text: "Potes de vidro"},
+        {value: "escova-sanitaria", text: "Escova sanitária"},
+        {value: "bule-cha-cafe", text: "Bule de chá / café"},
+        {value: "ferro-passar-roupa", text: "Ferro de passar roupa"},
+        {value: "jarras-agua", text: "Jarras de água"},
+        {value: "queijeira", text: "Queijeira"},
+        {value: "ralador-triturador", text: "Ralador / triturador"}
+      ];
 
-      // Carrega a planilha e remove da lista os itens já escolhidos
-      window.addEventListener("DOMContentLoaded", async () => {
+      // Load gifts and remove already selected ones
+      async function loadGifts() {
         const select = document.getElementById("listaItens");
-
+        
         try {
-          const response = await fetch(planilhaUrl);
+          // Clear existing options except the first one
+          while (select.options.length > 1) {
+            select.remove(1);
+          }
+          
+          // Get already selected gifts from Google Sheets
+          const response = await fetch(SHEET_URL);
           const csv = await response.text();
-
-          const linhas = csv.split("\n").slice(1); // ignora o cabeçalho
-          const itensEscolhidos = new Set();
-
-          for (const linha of linhas) {
-            const partes = linha.split(",");
-            const item = partes[1]?.toLowerCase().trim();
-
-            if (item) {
-              itensEscolhidos.add(item);
+          const lines = csv.split('\n').slice(1); // Skip header
+          
+          const selectedGifts = new Set();
+          for (const line of lines) {
+            const parts = line.split(',');
+            if (parts.length > 1) {
+              const gift = parts[1].trim().toLowerCase();
+              if (gift) selectedGifts.add(gift);
             }
           }
-
-          for (let i = select.options.length - 1; i >= 0; i--) {
-            const optionText = select.options[i].text.toLowerCase().trim();
-            if (itensEscolhidos.has(optionText)) {
-              select.remove(i);
+          
+          // Add available gifts to dropdown
+          for (const gift of ALL_GIFTS) {
+            const giftTextLower = gift.text.toLowerCase();
+            if (!Array.from(selectedGifts).some(selected => selected.includes(giftTextLower) || giftTextLower.includes(selected))) {
+              const option = new Option(gift.text, gift.value);
+              select.add(option);
             }
           }
         } catch (error) {
-          console.error("Erro ao carregar a lista de presentes:", error);
+          console.error("Error loading gifts:", error);
+          // Fallback: load all gifts if sheet can't be loaded
+          for (const gift of ALL_GIFTS) {
+            const option = new Option(gift.text, gift.value);
+            select.add(option);
+          }
         }
+      }
+
+      // Initialize page
+      window.addEventListener("DOMContentLoaded", () => {
+        loadGifts();
       });
 
+      // Confirm gift selection
       async function confirmarPresente() {
-        const nomeInput = document.getElementById('nameBox');
-        const nome = nomeInput.value.trim();
+        const nome = document.getElementById('nameBox').value.trim();
         const select = document.getElementById('listaItens');
         const index = select.selectedIndex;
 
@@ -117,8 +162,12 @@
         }
 
         const item = select.options[index].text;
+        const value = select.options[index].value;
 
-        // Envia para o Google Sheets
+        // Remove item immediately from dropdown
+        select.remove(index);
+        
+        // Send to Google Sheets
         const url = "https://script.google.com/macros/s/AKfycbwQ_tRkjP560U6Cz45ipx2StXND5AWf5qKMKwTvLLGZA4KXz6ZEUOLIdpbBiuL3YAqUjg/exec";
 
         try {
@@ -132,13 +181,18 @@
             window.location.href = `confirmado.html?item=${encodeURIComponent(item)}&nome=${encodeURIComponent(nome)}`;
           } else {
             alert("Erro ao salvar, tente novamente.");
+            // Reload gifts if there was an error
+            loadGifts();
           }
         } catch (error) {
           alert("Erro de conexão com o servidor.");
           console.error(error);
+          // Reload gifts if there was an error
+          loadGifts();
         }
       }
     </script>
+    <br><br><br>
   </div>
 </body>
 </html>
